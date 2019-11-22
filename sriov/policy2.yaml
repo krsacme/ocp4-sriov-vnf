@@ -1,0 +1,18 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: policy-2
+  namespace: openshift-sriov-network-operator
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: dell-r640-008.dsal.lab.eng.pek2.redhat.com
+  resourceName: intelnics2
+  priority: 99
+  mtu: 9000
+  numVfs: 5
+  nicSelector:
+      deviceID: "1572"
+      rootDevices:
+      - 0000:19:00.1
+      vendor: "8086"
+  deviceType: vfio-pci

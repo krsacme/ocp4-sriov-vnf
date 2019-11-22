@@ -1,0 +1,37 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachineInstance
+metadata:
+  name: rhel-trex-testpmd
+spec:
+  domain:
+    cpu:
+      sockets: 8
+      cores: 1
+      threads: 2
+      dedicatedCpuPlacement: true
+    devices:
+      disks:
+      - disk:
+          bus: virtio
+        name: disk0
+      interfaces:
+      - masquerade: {}
+        name: default
+      - name: sriov-net2
+        sriov: {}
+      rng: {}
+    machine:
+      type: q35
+    resources:
+      requests:
+        memory: 8192M
+  networks:
+  - name: default
+    pod: {}
+  - multus:
+      networkName: sriovnetwork2
+    name: sriov-net2
+  volumes:
+  - name: disk0
+    persistentVolumeClaim:
+      claimName: nfs-disk-vnf
